@@ -1,4 +1,4 @@
-from repository.Conexion import CConexion
+from repository.conexion import CConexion
 
 def ingresarVehiculo(placa, tipo, ingreso, salida, cobro):
     try:
