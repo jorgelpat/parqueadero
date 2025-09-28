@@ -51,6 +51,9 @@ def Formulario():
         tree.column(f"#{i}", anchor=CENTER, width=150)
         tree.heading(f"#{i}", text=col)
 
+    # Asociar selección
+    tree.bind("<<TreeviewSelect>>", seleccionar_registro)
+
     tree.pack()
 
     actualizarTreeView()
@@ -88,3 +91,15 @@ def actualizarTreeView():
     tree.delete(*tree.get_children())
     for row in vehiculos_dao.mostrarVehiculos():
         tree.insert("", "end", values=row)
+
+
+def seleccionar_registro(event):
+    """Cuando se selecciona una fila del treeview se copia los datos al Entry y el Combobox"""
+    global textBoxPlaca, combo, tree
+    itemSeleccionado = tree.focus()
+    if itemSeleccionado:
+        valores = tree.item(itemSeleccionado)["values"]
+        if valores:
+            textBoxPlaca.delete(0,END)
+            textBoxPlaca.insert(0,valores[0])   # Placa
+            combo.set(valores[1]) # Vehículo (CARRO/MOTO)
