@@ -1,0 +1,31 @@
+# --- Archivos de Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Entornos virtuales ---
+.venv/
+venv/
+env/
+ENV/
+*.env
+
+# --- Archivos de IDE ---
+.vscode/
+.idea/
+*.iml
+
+# --- Archivos del sistema ---
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log
+
+# --- Archivos de base de datos temporales ---
+*.sqlite3
+
+# --- Configuración local ---
+config.json
+*.local
