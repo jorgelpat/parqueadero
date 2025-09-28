@@ -1,6 +1,6 @@
 from repository.conexion import CConexion
 
-def ingresarVehiculo(placa, tipo, ingreso, salida, cobro):
+def ingresar_vehiculo(placa, tipo, ingreso, salida, cobro):
     try:
         con = CConexion.get_conexion()
         if con is None:
@@ -27,7 +27,7 @@ def ingresarVehiculo(placa, tipo, ingreso, salida, cobro):
         return None
 
 
-def modificarVehiculo(placa, salida, cobro):
+def modificar_vehiculo(placa, salida, cobro):
     try:
         con = CConexion.get_conexion()
         if con is None:
@@ -42,7 +42,7 @@ def modificarVehiculo(placa, salida, cobro):
         print("❌ Error al actualizar:", e)
 
 
-def mostrarVehiculos():
+def mostrar_vehiculos():
     try:
         con = CConexion.get_conexion()
         if con is None:
@@ -57,7 +57,7 @@ def mostrarVehiculos():
         return []
 
 
-def obtenerIngreso(placa):
+def obtener_ingreso(placa):
     try:
         con = CConexion.get_conexion()
         if con is None:

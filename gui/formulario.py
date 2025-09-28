@@ -34,8 +34,8 @@ def Formulario():
     seleccionTipo.set("CARRO")
 
     Button(groupBox, text="Eliminar", width=10).grid(row=2, column=0)
-    Button(groupBox, text="Cobrar", width=10, command=modificarRegistro).grid(row=2, column=1)
-    Button(groupBox, text="Ingresar", width=10, command=guardarRegistro).grid(row=2, column=2)
+    Button(groupBox, text="Cobrar", width=10, command=modificar_registro).grid(row=2, column=1)
+    Button(groupBox, text="Ingresar", width=10, command=guardar_registro).grid(row=2, column=2)
     
 
     groupBox2 = LabelFrame(base, text="Registro de Ingreso", padx=5, pady=5)
@@ -56,11 +56,11 @@ def Formulario():
 
     tree.pack()
 
-    actualizarTreeView()
+    actualizar_treeview()
     base.mainloop()
 
 
-def guardarRegistro():
+def guardar_registro():
     placa = textBoxPlaca.get().strip()
     tipo = combo.get()
 
@@ -71,11 +71,11 @@ def guardarRegistro():
     ingreso = datetime.now()
     salida, cobro = None, 0
 
-    resultado = vehiculos_dao.ingresarVehiculo(placa, tipo, ingreso, salida, cobro)
+    resultado = vehiculos_dao.ingresar_vehiculo(placa, tipo, ingreso, salida, cobro)
 
     if resultado is True:
         messagebox.showinfo("Información", f"✅ Vehículo ingresado:\nPlaca: {placa}\nTipo: {tipo}")
-        actualizarTreeView()
+        actualizar_treeview()
         textBoxPlaca.delete(0, END)
     elif resultado is False:
         messagebox.showerror("Error",f"Ya existe un ingreso activo con la placa {placa}")
@@ -83,25 +83,25 @@ def guardarRegistro():
         messagebox.showerror("Error","Error al intentar guardar el vehículo. Revisa conexión a DB")
 
 
-def modificarRegistro():
+def modificar_registro():
     placa = textBoxPlaca.get().strip()
     tipo = combo.get()
-    ingreso = vehiculos_dao.obtenerIngreso(placa)
+    ingreso = vehiculos_dao.obtener_ingreso(placa)
     if ingreso is None:
         messagebox.showerror("Error", f"No se encontró un ingreso activo para la placa {placa}")
         return
     salida = datetime.now()
     horas = math.ceil((salida - ingreso).total_seconds() / 3600)
     cobro = horas * (3000 if tipo == "CARRO" else 1000)
-    vehiculos_dao.modificarVehiculo(placa, salida, cobro)
+    vehiculos_dao.modificar_vehiculo(placa, salida, cobro)
     messagebox.showinfo("Información", f"✅ Vehículo cobrado:\nPlaca: {placa}\nTipo: {tipo}\nTotal: {cobro}")
-    actualizarTreeView()
+    actualizar_treeview()
     textBoxPlaca.delete(0, END)
 
 
-def actualizarTreeView():
+def actualizar_treeview():
     tree.delete(*tree.get_children())
-    for row in vehiculos_dao.mostrarVehiculos():
+    for row in vehiculos_dao.mostrar_vehiculos():
         tree.insert("", "end", values=row)
 
 
