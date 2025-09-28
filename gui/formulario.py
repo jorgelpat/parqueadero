@@ -63,12 +63,24 @@ def Formulario():
 def guardarRegistro():
     placa = textBoxPlaca.get().strip()
     tipo = combo.get()
+
+    if not placa:
+        messagebox.showwarning("Atención","Ingrese la placa")
+        return
+    
     ingreso = datetime.now()
     salida, cobro = None, 0
-    vehiculos_dao.ingresarVehiculo(placa, tipo, ingreso, salida, cobro)
-    messagebox.showinfo("Información", f"✅ Vehículo ingresado:\nPlaca: {placa}\nTipo: {tipo}")
-    actualizarTreeView()
-    textBoxPlaca.delete(0, END)
+
+    resultado = vehiculos_dao.ingresarVehiculo(placa, tipo, ingreso, salida, cobro)
+
+    if resultado is True:
+        messagebox.showinfo("Información", f"✅ Vehículo ingresado:\nPlaca: {placa}\nTipo: {tipo}")
+        actualizarTreeView()
+        textBoxPlaca.delete(0, END)
+    elif resultado is False:
+        messagebox.showerror("Error",f"Ya existe un ingreso activo con la placa {placa}")
+    else:
+        messagebox.showerror("Error","Error al intentar guardar el vehículo. Revisa conexión a DB")
 
 
 def modificarRegistro():

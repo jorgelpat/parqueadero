@@ -4,15 +4,27 @@ def ingresarVehiculo(placa, tipo, ingreso, salida, cobro):
     try:
         con = CConexion.get_conexion()
         if con is None:
-            return
+            return None
+        
         cursor = con.cursor()
+
+        # Verificar si hay un ingreso activo para esa placa
+        sql_check = "SELECT 1 FROM registros WHERE placa = %s AND salida IS NULL LIMIT 1"
+        cursor.execute(sql_check, (placa,))
+        if cursor.fetchone():
+            con.close()
+            return False
+        
+        # Insertar nuevo registro (No hay ingreso activo)
         sql = "INSERT INTO registros (placa, tipo_vehiculo, ingreso, salida, cobro) VALUES (%s, %s, %s, %s, %s)"
         cursor.execute(sql, (placa, tipo, ingreso, salida, cobro))
         con.commit()
         con.close()
         print("✅ Vehículo ingresado")
-    except Exception as e:
-        print("❌ Error al ingresar:", e)
+        return True
+    except ValueError as error:
+        print("❌ Error al ingresar:", error)
+        return None
 
 
 def modificarVehiculo(placa, salida, cobro):
