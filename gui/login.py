@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from repository import usuarios_dao
 
 class LoginFrame(tk.Frame):
     def __init__(self, master=None, on_success=None, **kwargs):
@@ -34,7 +35,7 @@ class LoginFrame(tk.Frame):
         password = self.password_entry.get()
 
         # 🔹 Aquí solo mostramos, pero podrías validar contra BD o un dict de usuarios
-        if usuario == "admin" and password == "1234":
+        if usuarios_dao.verificar_usuario(usuario, password):
             messagebox.showinfo("Login", "✅ Bienvenido, {}".format(usuario))
             if self.on_success:
                 self.on_success()  # abrir la otra ventana
