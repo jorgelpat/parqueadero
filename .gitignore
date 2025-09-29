@@ -29,3 +29,6 @@ Thumbs.db
 # --- Configuración local ---
 config.json
 *.local
+
+# --- Comentarios de ayuda ---
+ConventionalCommitsEmoji.md
