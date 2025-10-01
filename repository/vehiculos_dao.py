@@ -48,12 +48,12 @@ def mostrar_vehiculos():
         if con is None:
             return []
         cursor = con.cursor()
-        cursor.execute("SELECT placa, tipo_vehiculo, ingreso, salida, cobro FROM registros ORDER BY ingreso DESC")
+        cursor.execute("SELECT id_registro, placa, tipo_vehiculo, ingreso, salida, cobro FROM registros ORDER BY ingreso DESC")
         datos = cursor.fetchall()
         con.close()
         return datos
     except Exception as e:
-        print("❌ Error al mostrar:", e)
+        print("Error al mostrar:", e)
         return []
 
 
@@ -71,3 +71,25 @@ def obtener_ingreso(placa):
     except Exception as e:
         print("❌ Error al obtener ingreso:", e)
         return None
+    
+def eliminar_vehiculo(id_registro, usuario_admin, observacion):
+    try:
+        con = CConexion.get_conexion()
+        if con is None:
+            return None
+        cursor = con.cursor()
+
+        # Marcar como eliminado en registros
+        sql1 = "UPDATE registros SET eliminado = 1 WHERE id_registro = %s"
+        cursor.execute(sql1, (id_registro,))
+
+        # Guardar log de eliminación
+        sql2 = "INSERT INTO eliminaciones (id_Registro, usuario_admin, observacion) VALUES (%s, %s, %s)"
+        cursor.execute(sql2, (id_registro, usuario_admin, observacion))
+
+        con.commit()
+        con.close()
+        return True
+    except Exception as e:
+        print("Error al eliminar vehículo: ", e)
+        return False

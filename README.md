@@ -8,13 +8,13 @@ Aplicación en Python (Tkinter + Mysql) para la gestión de parqueaderos
 -   []   Arreglar salida de precio más grande para mejor visualización
 -   []   Roles de Usuario
 -   []   Cierre de Sesión
--   []   Eliminación de registros (Se mueven a otra tabla)
+-   []   Eliminación de registros (Se mueven a otra tabla). Nota: No debe mostrarse en la tabla treeview y debe verse el id_registro
 -   []   Búsqueda de datos (Pensar en eso un poco más)
 -   []   Reportes diarios, semanales y mensuales
 -   [x]   Ordenar columnas
 -   []   Exportar a excel/CSV
 -   []   Imprimir
--   []   Cumplir con PEP8 (nombres en minúscula para archivos, snake_case para funciones)
+-   [x]   Cumplir con PEP8 (nombres en minúscula para archivos, snake_case para funciones)
 -   []   Logs: guardar en un archivo (app.log) los errores y acciones importantes
 -   []   Guardar tarifas en tabla tarifas
 -   []   Empaquetar con pyinstaller para entregar como ejecutable(.exe)

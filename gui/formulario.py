@@ -1,10 +1,11 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk, messagebox
+import tkinter.simpledialog as simpledialog
 from datetime import datetime
 import math
 
-from repository import vehiculos_dao
+from repository import usuarios_dao, vehiculos_dao
 
 
 base = None
@@ -33,7 +34,7 @@ def Formulario():
     combo.grid(row=1, column=1)
     seleccionTipo.set("CARRO")
 
-    Button(groupBox, text="Eliminar", width=10).grid(row=2, column=0)
+    Button(groupBox, text="Eliminar", width=10, command=eliminar_registro).grid(row=2, column=0)
     Button(groupBox, text="Cobrar", width=10, command=modificar_registro).grid(row=2, column=1)
     Button(groupBox, text="Ingresar", width=10, command=guardar_registro).grid(row=2, column=2)
     
@@ -43,13 +44,28 @@ def Formulario():
 
     tree = ttk.Treeview(
         groupBox2,
-        columns=("Placa", "Vehiculo", "Ingreso", "Salida", "Cobro"),
+        columns=("ID", "Placa", "Vehiculo", "Ingreso", "Salida", "Cobro"),
         show='headings',
         height=10
     )
-    for i, col in enumerate(("Placa", "Vehiculo", "Ingreso", "Salida", "Cobro"), start=1):
-        tree.column(f"#{i}", anchor=CENTER, width=150)
-        tree.heading(f"#{i}", text=col, command=lambda _col=col: sort_column(tree, _col, False))
+    # Columna ID (oculta con ancho 0)
+    tree.column("#1", width=0, stretch=False)
+    tree.heading("#1", text="ID")
+
+    tree.column("#2", anchor=CENTER, width=150)
+    tree.heading("#2", text="Placa")
+
+    tree.column("#3", anchor=CENTER, width=150)
+    tree.heading("#3", text="Vehiculo")
+
+    tree.column("#4", anchor=CENTER, width=150)
+    tree.heading("#4", text="Ingreso")
+
+    tree.column("#5", anchor=CENTER, width=150)
+    tree.heading("#5", text="Salida")
+
+    tree.column("#6", anchor=CENTER, width=150)
+    tree.heading("#6", text="Cobro")
 
 
     # Asociar selección
@@ -98,6 +114,36 @@ def modificar_registro():
     messagebox.showinfo("Información", f"✅ Vehículo cobrado:\nPlaca: {placa}\nTipo: {tipo}\nTotal: {cobro}")
     actualizar_treeview()
     textBoxPlaca.delete(0, END)
+
+def eliminar_registro():
+    item = tree.focus()
+    if not item:
+        messagebox.showwarning("Eliminar", "Seleccione un registro para eliminar")
+        return
+    
+    valores = tree.item(item)["values"]
+    id_registro = valores[0]    # ID real
+    placa = valores[1]
+
+    # Pedir credenciales admin
+    usuario_admin = simpledialog.askstring("Confirmación", "Ingrese usuario admin:")
+    password_admin = simpledialog.askstring("Confirmación", "Ingrese contraseña", show="*")
+
+    if not usuarios_dao.verificar_usuario(usuario_admin, password_admin):
+        messagebox.showerror("Error","Credenciales de administrador inválidas")
+        return
+    
+    # Pedir observación
+    observacion = simpledialog.askstring("Observación", f"Motivo de la eliminación para {placa}:")
+    if not observacion:
+        messagebox.showwarning("Eliminar","Debe ingresar una observación")
+        return
+    
+    if vehiculos_dao.eliminar_vehiculo(id_registro, usuario_admin, observacion):
+        messagebox.showinfo("Eliminar",f"Registro {placa} eliminado con observación guardada")
+        actualizar_treeview()
+    else:
+        messagebox.showerror("Error","No se puede eliminar el registro")
 
 
 def actualizar_treeview():
