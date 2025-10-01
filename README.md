@@ -11,7 +11,7 @@ Aplicación en Python (Tkinter + Mysql) para la gestión de parqueaderos
 -   []   Eliminación de registros (Se mueven a otra tabla)
 -   []   Búsqueda de datos (Pensar en eso un poco más)
 -   []   Reportes diarios, semanales y mensuales
--   []   Ordenar columnas
+-   [x]   Ordenar columnas
 -   []   Exportar a excel/CSV
 -   []   Imprimir
 -   []   Cumplir con PEP8 (nombres en minúscula para archivos, snake_case para funciones)

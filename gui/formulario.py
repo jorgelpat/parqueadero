@@ -49,7 +49,8 @@ def Formulario():
     )
     for i, col in enumerate(("Placa", "Vehiculo", "Ingreso", "Salida", "Cobro"), start=1):
         tree.column(f"#{i}", anchor=CENTER, width=150)
-        tree.heading(f"#{i}", text=col)
+        tree.heading(f"#{i}", text=col, command=lambda _col=col: sort_column(tree, _col, False))
+
 
     # Asociar selección
     tree.bind("<<TreeviewSelect>>", seleccionar_registro)
@@ -115,3 +116,20 @@ def seleccionar_registro(event):
             textBoxPlaca.delete(0,END)
             textBoxPlaca.insert(0,valores[0])   # Placa
             combo.set(valores[1]) # Vehículo (CARRO/MOTO)
+
+
+def sort_column(tree,col,reverse):
+    """Ordena las columnas al hacer click en el encabezado"""
+    data = [(tree.set(child, col),child) for child in tree.get_children('')]
+
+    # Intentar convertir a número/fecha si se puede
+    try:
+        data.sort(key=lambda t: float(t[0]), reverse=reverse)
+    except ValueError:
+        data.sort(key=lambda t: t[0], reverse=reverse)
+
+    for index, (val, child) in enumerate(data):
+        tree.move(child, '', index)
+
+    # Alternar entre ascendente y descendente
+    tree.heading(col, command=lambda: sort_column(tree, col, not reverse))
