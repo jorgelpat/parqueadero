@@ -48,7 +48,12 @@ def mostrar_vehiculos():
         if con is None:
             return []
         cursor = con.cursor()
-        cursor.execute("SELECT id_registro, placa, tipo_vehiculo, ingreso, salida, cobro FROM registros ORDER BY ingreso DESC")
+        cursor.execute(
+            """SELECT id_registro, placa, tipo_vehiculo, ingreso, salida, cobro 
+            FROM registros 
+            WHERE eliminado = 0
+            ORDER BY ingreso DESC"""
+            )
         datos = cursor.fetchall()
         con.close()
         return datos

@@ -49,7 +49,7 @@ def Formulario():
         height=10
     )
     # Columna ID (oculta con ancho 0)
-    tree.column("#1", width=0, stretch=False)
+    tree.column("#1", anchor=CENTER, width=50)
     tree.heading("#1", text="ID")
 
     tree.column("#2", anchor=CENTER, width=150)
