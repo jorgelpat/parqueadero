@@ -160,8 +160,8 @@ def seleccionar_registro(event):
         valores = tree.item(itemSeleccionado)["values"]
         if valores:
             textBoxPlaca.delete(0,END)
-            textBoxPlaca.insert(0,valores[0])   # Placa
-            combo.set(valores[1]) # Vehículo (CARRO/MOTO)
+            textBoxPlaca.insert(0,valores[1])   # Placa
+            combo.set(valores[2]) # Vehículo (CARRO/MOTO)
 
 
 def sort_column(tree,col,reverse):
