@@ -8,7 +8,7 @@ Aplicación en Python (Tkinter + Mysql) para la gestión de parqueaderos
 -   []   Arreglar salida de precio más grande para mejor visualización
 -   []   Roles de Usuario
 -   []   Cierre de Sesión
--   []   Eliminación de registros (Se mueven a otra tabla). Nota: No debe mostrarse en la tabla treeview y debe verse el id_registro
+-   [x]   Eliminación de registros (Se mueven a otra tabla). Nota: No debe mostrarse en la tabla treeview y debe verse el id_registro
 -   []   Búsqueda de datos (Pensar en eso un poco más)
 -   []   Reportes diarios, semanales y mensuales
 -   [x]   Ordenar columnas
