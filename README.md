@@ -7,7 +7,8 @@ Aplicación en Python (Tkinter + Mysql) para la gestión de parqueaderos
 -   []   Cada registro que haga un usuario debe guardarse en una tabla
 -   []   Arreglar salida de precio más grande para mejor visualización
 -   []   Roles de Usuario
--   []   Cierre de Sesión
+-   [x]   Cierre de Sesión
+-   []   Aparecer el nombre del username que se encuentra logueado
 -   [x]   Eliminación de registros (Se mueven a otra tabla). Nota: No debe mostrarse en la tabla treeview y debe verse el id_registro
 -   []   Búsqueda de datos (Pensar en eso un poco más)
 -   []   Reportes diarios, semanales y mensuales

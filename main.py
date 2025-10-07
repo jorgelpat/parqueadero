@@ -2,16 +2,19 @@ import tkinter as tk
 from gui.login import LoginFrame
 from gui.formulario import Formulario
 
-def iniciar_app():
-    # Cierra la ventana de login y abre el formulario principal
-    login_window.destroy()
-    Formulario()
+def mostrar_login():
+    """Muestra el login al iniciar o cerrar sesion"""
+    root = tk.Tk()
+    root.title("Login - Parqueadero")
+
+    login = LoginFrame(root, on_success=lambda: mostrar_formulario(root))
+    login.pack()
+    root.mainloop()
+
+def mostrar_formulario(ventana_login):
+    """Cierra login y abre formulario principal"""
+    ventana_login.destroy()
+    Formulario(on_logout=mostrar_login) # Pasamos callback de cierre de sesion
 
 if __name__ == "__main__":
-    login_window = tk.Tk()
-    login_window.title("Login - Parqueadero")
-
-    login = LoginFrame(login_window, on_success=iniciar_app)
-    login.pack()
-
-    login_window.mainloop()
+    mostrar_login()
