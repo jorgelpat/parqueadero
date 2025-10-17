@@ -20,10 +20,10 @@ def ingresar_vehiculo(placa, tipo, ingreso, salida, cobro):
         cursor.execute(sql, (placa, tipo, ingreso, salida, cobro))
         con.commit()
         con.close()
-        print("✅ Vehículo ingresado")
+        print("Vehículo ingresado")
         return True
     except ValueError as error:
-        print("❌ Error al ingresar:", error)
+        print("Error al ingresar:", error)
         return None
 
 
@@ -37,9 +37,9 @@ def modificar_vehiculo(placa, salida, cobro):
         cursor.execute(sql, (salida, cobro, placa))
         con.commit()
         con.close()
-        print("✅ Vehículo actualizado")
+        print("Vehículo actualizado")
     except Exception as e:
-        print("❌ Error al actualizar:", e)
+        print("Error al actualizar:", e)
 
 
 def mostrar_vehiculos():
@@ -74,7 +74,7 @@ def obtener_ingreso(placa):
         con.close()
         return result[0] if result else None
     except Exception as e:
-        print("❌ Error al obtener ingreso:", e)
+        print("Error al obtener ingreso:", e)
         return None
     
 def eliminar_vehiculo(id_registro, usuario_admin, observacion):

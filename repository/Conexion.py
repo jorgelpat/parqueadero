@@ -8,5 +8,5 @@ class CConexion:
             conexion = mysql.connector.connect(**DB_CONFIG) # Con ** desempaquetamos el diccionario
             return conexion
         except mysql.connector.Error as error:
-            print("❌ Error al conectar a la BD:", error)
+            print("Error al conectar a la BD:", error)
             return None

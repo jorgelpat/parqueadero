@@ -36,11 +36,11 @@ class LoginFrame(tk.Frame):
 
         # 🔹 Aquí solo mostramos, pero podrías validar contra BD o un dict de usuarios
         if usuarios_dao.verificar_usuario(usuario, password):
-            messagebox.showinfo("Login", "✅ Bienvenido, {}".format(usuario))
+            messagebox.showinfo("Login", "Bienvenido, {}".format(usuario))
             if self.on_success:
                 self.on_success()  # abrir la otra ventana
         else:
-            messagebox.showerror("Login", "❌ Usuario o contraseña incorrectos")
+            messagebox.showerror("Login", "Usuario o contraseña incorrectos")
 
     def olvidaste_password(self):
         messagebox.showinfo("Recordatorio", "Función de recuperación aún no implementada.")
